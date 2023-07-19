@@ -1,7 +1,8 @@
-package com.olexii8bit.notesapp
+package com.olexii8bit.notesapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.olexii8bit.notesapp.R
 import com.olexii8bit.notesapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
