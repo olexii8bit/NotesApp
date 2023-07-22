@@ -22,16 +22,15 @@ interface NoteDao {
     @Query("SELECT * FROM notes")
     fun getAll(): List<NoteEntity>
 
-    @Query("SELECT notes.* FROM notes " +
-            "JOIN categories ON notes.noteCategoryId = categories.categoryId " +
-            "WHERE categories.categoryId = :categoryId")
-    fun getNotesByCategory(categoryId: Int): List<NoteEntity>
+    @Query("SELECT * FROM notes " +
+            "WHERE noteCategoryId LIKE :categoryId")
+    fun getNotesByCategory(categoryId: Long): List<NoteEntity>
 
     @Query("SELECT categories.*, notes.* " +
             "FROM notes " +
             "LEFT JOIN categories ON notes.noteCategoryId = categories.categoryId " +
             "WHERE notes.noteId = :noteId")
-    fun getNoteWithCategory(noteId: Int): NoteWithCategory?
+    fun getNoteWithCategory(noteId: Long): NoteWithCategory
 
 
 }

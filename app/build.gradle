@@ -8,6 +8,12 @@ android {
     namespace 'com.olexii8bit.notesapp'
     compileSdk 33
 
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
     defaultConfig {
         applicationId "com.olexii8bit.notesapp"
         minSdk 26
@@ -40,6 +46,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
+    }
 }
 
 dependencies {
@@ -49,32 +60,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.10.1'
-
-    implementation 'androidx.test:core-ktx:1.5.0'
-    implementation 'androidx.test:runner:1.5.2'
-    implementation 'androidx.test.ext:junit-ktx:1.1.5'
+    // tests
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    testImplementation 'androidx.test.ext:truth:1.5.0'
-    testImplementation 'com.google.truth:truth:1.1.3'
-
-    androidTestImplementation "com.google.truth:truth:1.1.3"
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
-
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2"
-
+    // room
+    implementation "androidx.room:room-ktx:2.5.2"
     implementation "androidx.room:room-runtime:2.5.2"
-    androidTestImplementation 'org.junit.jupiter:junit-jupiter'
     annotationProcessor "androidx.room:room-compiler:2.5.2"
     testImplementation "androidx.room:room-testing:2.5.2"
     kapt "androidx.room:room-compiler:2.5.2"
-    //implementation "androidx.room:room-coroutines:2.1.0-alpha04"
-
 
 }

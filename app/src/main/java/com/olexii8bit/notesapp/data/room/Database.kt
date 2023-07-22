@@ -18,18 +18,17 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
 
     companion object {
+        private const val DB_NAME = "notes-db"
         private lateinit var applicationContext: Context
 
         fun init(applicationContext: Context) {
             this.applicationContext = applicationContext
         }
 
-        private val instance: AppDatabase by lazy {
+        val instance: AppDatabase by lazy {
             Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "notes-db")
+                AppDatabase::class.java, DB_NAME)
                 .build()
         }
     }
-
-
 }
