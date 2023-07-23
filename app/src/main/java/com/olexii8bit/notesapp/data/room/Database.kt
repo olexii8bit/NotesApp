@@ -10,6 +10,8 @@ import com.olexii8bit.notesapp.data.room.dao.NoteDao
 import com.olexii8bit.notesapp.data.room.entities.CategoryEntity
 import com.olexii8bit.notesapp.data.room.entities.NoteEntity
 
+const val DB_NAME = "notes-db"
+
 @Database(entities = [NoteEntity::class, CategoryEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -17,18 +19,33 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
     abstract fun categoryDao(): CategoryDao
 
-    companion object {
-        private const val DB_NAME = "notes-db"
-        private lateinit var applicationContext: Context
+    class Base(context: Context = applicationContext) {
+        private val database by lazy {
+            return@lazy Room.databaseBuilder(
+                context,
+                AppDatabase::class.java,
+                DB_NAME
+            ).build()
+        }
 
+        fun provideDataBase(): AppDatabase = database
+    }
+
+    class Mock(context: Context = applicationContext) {
+        private val database by lazy {
+            return@lazy Room.inMemoryDatabaseBuilder(
+                context,
+                AppDatabase::class.java,
+            ).build()
+        }
+
+        fun provideDataBase(): AppDatabase = database
+    }
+
+    companion object {
         fun init(applicationContext: Context) {
             this.applicationContext = applicationContext
         }
-
-        val instance: AppDatabase by lazy {
-            Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, DB_NAME)
-                .build()
-        }
+        private lateinit var applicationContext: Context
     }
 }

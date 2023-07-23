@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.olexii8bit.notesapp.data.room.entities.NoteEntity
-import com.olexii8bit.notesapp.data.room.entities.NoteWithCategory
+import com.olexii8bit.notesapp.data.room.entities.NoteWithCategoryEntity
 
 @Dao
 interface NoteDao {
@@ -30,7 +30,7 @@ interface NoteDao {
             "FROM notes " +
             "LEFT JOIN categories ON notes.noteCategoryId = categories.categoryId " +
             "WHERE notes.noteId = :noteId")
-    fun getNoteWithCategory(noteId: Long): NoteWithCategory
+    fun getNoteWithCategory(noteId: Long): NoteWithCategoryEntity
 
 
 }

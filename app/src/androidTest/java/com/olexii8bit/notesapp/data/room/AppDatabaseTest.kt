@@ -1,7 +1,6 @@
 package com.olexii8bit.notesapp.data.room
 
 import android.content.Context
-import androidx.room.Room
 import androidx.test.InstrumentationRegistry
 import com.olexii8bit.notesapp.data.room.dao.CategoryDao
 import com.olexii8bit.notesapp.data.room.dao.NoteDao
@@ -24,10 +23,7 @@ internal class AppDatabaseTest {
     @Before
     fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
-        appDatabase = Room.inMemoryDatabaseBuilder(
-            context,
-            AppDatabase::class.java)
-            .build()
+        appDatabase = AppDatabase.Mock(context).provideDataBase()
         noteDao = appDatabase.noteDao()
         categoryDao = appDatabase.categoryDao()
     }
