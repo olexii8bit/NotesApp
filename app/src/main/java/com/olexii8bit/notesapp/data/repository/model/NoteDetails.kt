@@ -1,6 +1,6 @@
 package com.olexii8bit.notesapp.data.repository.model
 
-data class NoteWithCategory(
+data class NoteDetails(
     val category: Category? = null,
     val note: Note,
 )

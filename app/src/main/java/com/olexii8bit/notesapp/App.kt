@@ -5,9 +5,9 @@ import com.olexii8bit.notesapp.data.room.AppDatabase
 
 
 class App : Application() {
+    lateinit var database: AppDatabase
     override fun onCreate() {
         super.onCreate()
-
-        AppDatabase.init(applicationContext)
+        database = AppDatabase.Base(applicationContext).provideDataBase()
     }
 }

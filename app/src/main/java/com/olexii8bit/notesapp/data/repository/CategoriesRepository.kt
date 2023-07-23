@@ -3,7 +3,7 @@ package com.olexii8bit.notesapp.data.repository
 import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.room.dao.CategoryDao
 
-interface CategoryRepository {
+interface CategoriesRepository {
     fun addCategory(category: Category)
     fun updateCategory(category: Category)
     fun deleteCategory(category: Category)
@@ -11,7 +11,7 @@ interface CategoryRepository {
 
     class CategoryRepositoryImpl(
         private val categoryDao: CategoryDao
-    ): CategoryRepository {
+    ): CategoriesRepository {
 
         override fun addCategory(category: Category) = categoryDao.insert(category.toEntity())
 
