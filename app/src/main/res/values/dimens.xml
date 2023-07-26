@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="bigMargin">16dp</dimen>
+    <dimen name="mediumMargin">12dp</dimen>
+    <dimen name="smallMargin">4dp</dimen>
+
+    <dimen name="bigPadding">16dp</dimen>
+    <dimen name="mediumPadding">12dp</dimen>
+    <dimen name="smallPadding">4dp</dimen>
+
+    <dimen name="bigCornerRadius">10dp</dimen>
+    <dimen name="elevation">10dp</dimen>
+
+    <dimen name="baseButtonHeightWidth">48dp</dimen>
+    <dimen name="bigButtonHeightWidth">96dp</dimen>
+    <dimen name="bigTextSize">24sp</dimen>
+
+    <dimen name="elementsMinHeight">48dp</dimen>
+</resources>

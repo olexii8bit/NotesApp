@@ -8,6 +8,6 @@ class App : Application() {
     lateinit var database: AppDatabase
     override fun onCreate() {
         super.onCreate()
-        database = AppDatabase.Base(applicationContext).provideDataBase()
+        database = AppDatabase.Mock(applicationContext).provideDataBase()
     }
 }

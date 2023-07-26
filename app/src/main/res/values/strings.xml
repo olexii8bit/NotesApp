@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NotesApp</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="addNote">Add note</string>
+    <string name="goBack">Go back</string>
+    <string name="startInput">Start input…</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".presentation.MainActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingStart="@dimen/smallPadding"
+android:paddingEnd="@dimen/smallPadding"
+android:orientation="vertical">
 
+    <FrameLayout
+        android:clipToPadding="false"
+        android:id="@+id/categoriesFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smallMargin"/>
 
+    <FrameLayout
+        android:clipToPadding="false"
+        android:id="@+id/notesFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="@dimen/bigCornerRadius"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/baseButtonHeightWidth"
+        android:layout_height="@dimen/baseButtonHeightWidth"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/goBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/baseButtonHeightWidth"
+        android:spinnerMode="dialog"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/topBarrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="backButton, categorySpinner"/>
+
+    <EditText
+        android:id="@+id/titleEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/bigMargin"
+        android:autofillHints="name"
+        android:background="@android:color/transparent"
+        android:hint="@string/title"
+        android:inputType="text"
+        android:minHeight="@dimen/elementsMinHeight"
+        android:textColorHint="#78909C"
+        android:textSize="@dimen/bigTextSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topBarrier"
+        tools:ignore="VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/contentEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/bigMargin"
+        android:layout_weight="1"
+        android:autofillHints="name"
+        android:background="@android:color/transparent"
+        android:hint="@string/startInput"
+        android:inputType="textMultiLine"
+        android:minHeight="@dimen/elementsMinHeight"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        tools:ignore="VisualLintTextFieldSize" />
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="@dimen/baseButtonHeightWidth"
+        android:layout_height="@dimen/baseButtonHeightWidth"
+        android:scaleType="fitCenter"
+        android:src="@drawable/delete"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/delete"
+        android:layout_marginEnd="@dimen/bigMargin"
+        android:layout_marginBottom="@dimen/bigMargin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
