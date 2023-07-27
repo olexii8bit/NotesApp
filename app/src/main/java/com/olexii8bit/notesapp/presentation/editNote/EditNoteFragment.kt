@@ -19,7 +19,6 @@ class EditNoteFragment : DialogFragment() {
 
     private lateinit var binding: FragmentEditNoteBinding
 
-
     companion object {
         const val NEW_NOTE_RESULT_KEY = "NEW_NOTE_RESULT_KEY"
         const val UPDATE_NOTE_RESULT_KEY = "UPDATE_NOTE_RESULT_KEY"
@@ -53,25 +52,29 @@ class EditNoteFragment : DialogFragment() {
         }
 
         binding.backButton.setOnClickListener {
-            if(receivedNote == null) {
-                val newNote = Note(
-                    binding.titleEditText.text.toString(),
-                    binding.contentEditText.text.toString()
-                )
-                setFragmentResult(NEW_NOTE_RESULT_KEY, bundleOf(NOTE_ARG to newNote))
+            if (binding.titleEditText.text.isBlank() && binding.contentEditText.text.isBlank()) {
+                navigator().goBack()
             } else {
-                val updatedNote = receivedNote.copy(
-                    title = binding.titleEditText.text.toString(),
-                    content = binding.contentEditText.text.toString()
-                )
-                setFragmentResult(UPDATE_NOTE_RESULT_KEY, bundleOf(NOTE_ARG to updatedNote))
+                if (receivedNote == null) {
+                    val newNote = Note(
+                        binding.titleEditText.text.toString(),
+                        binding.contentEditText.text.toString()
+                    )
+                    setFragmentResult(NEW_NOTE_RESULT_KEY, bundleOf(NOTE_ARG to newNote))
+                } else {
+                    val updatedNote = receivedNote.copy(
+                        title = binding.titleEditText.text.toString(),
+                        content = binding.contentEditText.text.toString()
+                    )
+                    setFragmentResult(UPDATE_NOTE_RESULT_KEY, bundleOf(NOTE_ARG to updatedNote))
+                }
+                navigator().goBack()
             }
-            navigator().toMainMenu()
         }
         binding.deleteButton.setOnClickListener {
             val deleteNote = receivedNote!!.copy()
             setFragmentResult(DELETE_NOTE_RESULT_KEY, bundleOf(NOTE_ARG to deleteNote))
-            navigator().toMainMenu()
+            navigator().goMainScreen()
         }
 
         if(receivedNote != null) {
@@ -80,5 +83,7 @@ class EditNoteFragment : DialogFragment() {
         } else {
             binding.deleteButton.isVisible = false
         }
+
+
     }
 }
