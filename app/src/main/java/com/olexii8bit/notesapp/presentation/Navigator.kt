@@ -12,6 +12,7 @@ interface Navigator {
     
     fun showEditNoteFragment(note: Note?)
     fun showCategoryEditDialog(category: Category?)
-    fun toMainMenu()
+    fun goMainScreen()
+    fun goBack()
 
 }

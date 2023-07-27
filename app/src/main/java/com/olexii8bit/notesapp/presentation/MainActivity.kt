@@ -1,8 +1,10 @@
 package com.olexii8bit.notesapp.presentation
 
 import android.os.Bundle
+import android.view.View
+import android.view.View.GONE
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.repository.model.Note
@@ -32,16 +34,22 @@ class MainActivity : AppCompatActivity(), Navigator {
                 .commit()
         }
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                supportFragmentManager.popBackStack()
+                if(supportFragmentManager.backStackEntryCount == 0)
+                    binding.categoriesFragmentContainer.visibility = View.VISIBLE
+            }
 
-        binding.notesFragmentContainer
+        })
     }
 
     override fun showEditNoteFragment(note: Note?) {
-        binding.categoriesFragmentContainer.isVisible = false
+        binding.categoriesFragmentContainer.visibility = GONE
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
-            .replace(binding.notesFragmentContainer.id, EditNoteFragment.newInstance(note))
+            .replace(binding.notesFragmentContainer.id, EditNoteFragment.newInstance(note), "1333")
             .commit()
     }
 
@@ -49,8 +57,13 @@ class MainActivity : AppCompatActivity(), Navigator {
         TODO("Not yet implemented")
     }
 
-    override fun toMainMenu() {
-        binding.categoriesFragmentContainer.isVisible = true
+    override fun goMainScreen() {
+        binding.categoriesFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
+
+    override fun goBack() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
 }
