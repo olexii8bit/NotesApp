@@ -6,4 +6,9 @@
     <string name="goBack">Go back</string>
     <string name="startInput">Start input…</string>
     <string name="delete">Delete</string>
+
+    <string name="categoryDialogTitle">Category</string>
+    <string name="categoryDialogConfirm">Confirm</string>
+    <string name="categoryDialogDelete">Delete</string>
+    <string name="categoryDialogTextEditPlaceholder">Name</string>
 </resources>

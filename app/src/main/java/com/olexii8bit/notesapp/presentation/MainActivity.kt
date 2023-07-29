@@ -6,10 +6,12 @@ import android.view.View.GONE
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.repository.model.Note
 import com.olexii8bit.notesapp.databinding.ActivityMainBinding
 import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
+import com.olexii8bit.notesapp.presentation.editCategoryDialog.EditCategoryDialogFragment
 import com.olexii8bit.notesapp.presentation.editNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.note.NotesFragment
 
@@ -53,8 +55,37 @@ class MainActivity : AppCompatActivity(), Navigator {
             .commit()
     }
 
-    override fun showCategoryEditDialog(category: Category?) {
-        TODO("Not yet implemented")
+    override fun showCategoryEditDialog(
+        category: Category?,
+        lifecycleOwner: LifecycleOwner,
+        onNewCategory: (Category) -> Unit,
+    ) {
+        EditCategoryDialogFragment.apply {
+            this.show(supportFragmentManager, category)
+
+            this.listenResult(NEW_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
+                onNewCategory.invoke(it)
+            }
+        }
+    }
+
+    override fun showCategoryEditDialog(
+        category: Category?,
+        lifecycleOwner: LifecycleOwner,
+        onUpdateCategory: (Category) -> Unit,
+        onDeleteCategory: (Category) -> Unit,
+    ) {
+        EditCategoryDialogFragment.apply {
+            this.show(supportFragmentManager, category)
+
+            this.listenResult(UPDATE_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
+                onUpdateCategory.invoke(it)
+            }
+
+            this.listenResult(DELETE_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
+                onDeleteCategory.invoke(it)
+            }
+        }
     }
 
     override fun goMainScreen() {
@@ -65,4 +96,5 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun goBack() {
         onBackPressedDispatcher.onBackPressed()
     }
+
 }

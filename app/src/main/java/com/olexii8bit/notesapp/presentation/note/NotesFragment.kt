@@ -51,7 +51,7 @@ class NotesFragment : Fragment() {
 
         model.notes.observe(viewLifecycleOwner) {
             adapter.set(it)
-            Log.d("ddd", "Observed")
+            Log.d("ddd", "Observed notes")
             it.forEach {
                 Log.d("ddd", it.toString())
             }
@@ -60,30 +60,27 @@ class NotesFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.NEW_NOTE_RESULT_KEY,
             viewLifecycleOwner)
-        { key:String, bundle: Bundle ->
+        { _:String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val newNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
-            Log.d("ddd", "New: " + newNote)
             model.addNote(newNote)
         }
 
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.UPDATE_NOTE_RESULT_KEY,
             viewLifecycleOwner)
-        { key: String, bundle: Bundle ->
+        { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val updatedNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
-            Log.d("ddd", "Update: " + updatedNote)
             model.updateNote(updatedNote)
         }
 
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.DELETE_NOTE_RESULT_KEY,
             viewLifecycleOwner)
-        { key: String, bundle: Bundle ->
+        { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val deleteNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
-            Log.d("ddd", "Delete: " + deleteNote)
             model.deleteNote(deleteNote)
         }
 

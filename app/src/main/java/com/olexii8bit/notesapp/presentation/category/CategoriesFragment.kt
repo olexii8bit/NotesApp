@@ -1,12 +1,14 @@
 package com.olexii8bit.notesapp.presentation.category
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.databinding.FragmentCategoriesBinding
 import com.olexii8bit.notesapp.presentation.navigator
 
@@ -30,30 +32,33 @@ class CategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CategoryRecyclerAdapter()
+        val onNewCategory: (Category) -> Unit = { model.addCategory(it) }
+        val onUpdateCategory: (Category) -> Unit = { model.updateCategory(it) }
+        val onDeleteCategory: (Category) -> Unit = { model.deleteCategory(it) }
+
+        val adapter = CategoryRecyclerAdapter { category: Category ->
+            navigator().showCategoryEditDialog(
+                category,
+                viewLifecycleOwner,
+                onUpdateCategory,
+                onDeleteCategory
+            )
+        }
+
+        binding.addCategoryButton.setOnClickListener {
+            navigator().showCategoryEditDialog(null, viewLifecycleOwner, onNewCategory)
+        }
+
         binding.categoriesRecycler.layoutManager =
             LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.categoriesRecycler.adapter = adapter
 
         model.categories.observe(viewLifecycleOwner) {
             adapter.set(it)
-        }
-//
-//        adapter.set(
-//            listOf(
-//                Category("1"),
-//                Category("12"),
-//                Category("123"),
-//                Category("4"),
-//                Category("5"),
-//                Category("56"),
-//                Category("567"),
-//                Category("5678"),
-//                Category("9"))
-//        )
-
-        binding.addCategoryButton.setOnClickListener {
-            navigator().showCategoryEditDialog(null)
+            Log.d("ddd", "Observed categories")
+            it.forEach { element: Category ->
+                Log.d("ddd", element.toString())
+            }
         }
     }
 
