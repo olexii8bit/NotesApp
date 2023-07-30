@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem/random"
             android:ellipsize="end"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:textSize="@dimen/bigTextSize" />
 
         <TextView
             android:id="@+id/contentTextView"
@@ -29,9 +30,10 @@
             android:layout_marginTop="@dimen/smallMargin"
             tools:text="@tools:sample/lorem/random"
             android:layout_weight="1"
-            android:maxLines="4"
+            android:maxLines="6"
             android:ellipsize="end"
-            tools:ignore="VisualLintLongText" />
+            tools:ignore="VisualLintLongText"
+            android:textSize="@dimen/normalTextSize" />
 
         <TextView
             android:id="@+id/createdAtTextView"
@@ -39,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/smallMargin"
             android:layout_marginStart="@dimen/smallMargin"
+            android:textSize="@dimen/smallTextSize"
             android:maxLines="1"
-            tools:text="@tools:sample/date/ddmmyy"
-            />
+            tools:text="@tools:sample/date/ddmmyy" />
 
     </LinearLayout>
 

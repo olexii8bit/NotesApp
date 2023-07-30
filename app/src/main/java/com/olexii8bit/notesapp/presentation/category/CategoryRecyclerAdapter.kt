@@ -8,24 +8,30 @@ import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.databinding.CategoryItemBinding
 
 class CategoryRecyclerAdapter(
-    private val onItemLongClickListener: (Category) -> Unit = {  }
+    private val onItemLongClickListener: (Category) -> Unit = { },
 ) : Adapter<CategoryRecyclerAdapter.ViewHolder>() {
 
     private val items: MutableList<Category> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryRecyclerAdapter.ViewHolder {
-        val binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): CategoryRecyclerAdapter.ViewHolder {
+        val binding =
+            CategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryRecyclerAdapter.ViewHolder, position: Int) {
-        if(items.isNotEmpty()) {
+        if (items.isNotEmpty()) {
             holder.bind(items[position])
         }
     }
+
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(private val binding: CategoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: CategoryItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Category) {
             binding.root.setOnLongClickListener {
                 onItemLongClickListener(item)

@@ -77,7 +77,7 @@ class EditNoteFragment : DialogFragment() {
             navigator().goMainScreen()
         }
 
-        if(receivedNote != null) {
+        if (receivedNote != null) {
             binding.titleEditText.setText(receivedNote.title, TextView.BufferType.EDITABLE)
             binding.contentEditText.setText(receivedNote.content, TextView.BufferType.EDITABLE)
         } else {

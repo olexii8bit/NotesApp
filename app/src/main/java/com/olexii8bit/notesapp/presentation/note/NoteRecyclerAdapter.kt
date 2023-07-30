@@ -9,25 +9,29 @@ import com.olexii8bit.notesapp.databinding.NoteItemBinding
 import java.time.format.DateTimeFormatter
 
 class NoteRecyclerAdapter(
-    private val onItemClickListener: (Note) -> Unit = {  }
+    private val onItemClickListener: (Note) -> Unit = { },
 ) : RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {
 
     private val items: MutableList<Note> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteRecyclerAdapter.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): NoteRecyclerAdapter.ViewHolder {
         val binding = NoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(items.isNotEmpty()) {
+        if (items.isNotEmpty()) {
             holder.bind(items[position])
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(private val binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: NoteItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Note) {
             binding.root.setOnClickListener { onItemClickListener(item) }
 
@@ -37,7 +41,8 @@ class NoteRecyclerAdapter(
             if (item.content.isNotEmpty()) binding.contentTextView.text = item.content
             else binding.contentTextView.visibility = GONE
 
-            binding.createdAtTextView.text = item.createdAt!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).toString()
+            binding.createdAtTextView.text =
+                item.createdAt!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).toString()
         }
     }
 

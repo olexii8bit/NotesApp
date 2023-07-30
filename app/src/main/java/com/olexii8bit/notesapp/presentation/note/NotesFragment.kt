@@ -59,8 +59,9 @@ class NotesFragment : Fragment() {
 
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.NEW_NOTE_RESULT_KEY,
-            viewLifecycleOwner)
-        { _:String, bundle: Bundle ->
+            viewLifecycleOwner
+        )
+        { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val newNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
             model.addNote(newNote)
@@ -68,7 +69,8 @@ class NotesFragment : Fragment() {
 
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.UPDATE_NOTE_RESULT_KEY,
-            viewLifecycleOwner)
+            viewLifecycleOwner
+        )
         { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val updatedNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
@@ -77,7 +79,8 @@ class NotesFragment : Fragment() {
 
         parentFragmentManager.setFragmentResultListener(
             EditNoteFragment.DELETE_NOTE_RESULT_KEY,
-            viewLifecycleOwner)
+            viewLifecycleOwner
+        )
         { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val deleteNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!

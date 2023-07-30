@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStackImmediate()
-                if(supportFragmentManager.backStackEntryCount == 0)
+                if (supportFragmentManager.backStackEntryCount == 0)
                     binding.categoriesFragmentContainer.visibility = View.VISIBLE
             }
 
@@ -55,13 +55,12 @@ class MainActivity : AppCompatActivity(), Navigator {
             .commit()
     }
 
-    override fun showCategoryEditDialog(
-        category: Category?,
+    override fun showNewCategoryDialog(
         lifecycleOwner: LifecycleOwner,
         onNewCategory: (Category) -> Unit,
     ) {
         EditCategoryDialogFragment.apply {
-            this.show(supportFragmentManager, category)
+            this.show(supportFragmentManager, null)
 
             this.listenResult(NEW_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
                 onNewCategory.invoke(it)
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun showCategoryEditDialog(
-        category: Category?,
+        category: Category,
         lifecycleOwner: LifecycleOwner,
         onUpdateCategory: (Category) -> Unit,
         onDeleteCategory: (Category) -> Unit,

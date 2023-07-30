@@ -13,7 +13,7 @@ import com.olexii8bit.notesapp.data.repository.model.NoteDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NotesViewModel(app: Application): AndroidViewModel(app) {
+class NotesViewModel(app: Application) : AndroidViewModel(app) {
     private val notesRepository: NotesRepository =
         NotesRepository.NotesRepositoryImpl((app as App).database.noteDao())
 

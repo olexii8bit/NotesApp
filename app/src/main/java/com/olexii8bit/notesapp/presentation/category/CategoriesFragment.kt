@@ -46,7 +46,7 @@ class CategoriesFragment : Fragment() {
         }
 
         binding.addCategoryButton.setOnClickListener {
-            navigator().showCategoryEditDialog(null, viewLifecycleOwner, onNewCategory)
+            navigator().showNewCategoryDialog(viewLifecycleOwner, onNewCategory)
         }
 
         binding.categoriesRecycler.layoutManager =

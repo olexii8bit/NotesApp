@@ -11,7 +11,7 @@ import com.olexii8bit.notesapp.data.repository.model.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CategoriesViewModel(app: Application): AndroidViewModel(app) {
+class CategoriesViewModel(app: Application) : AndroidViewModel(app) {
     private val categoriesRepository: CategoriesRepository =
         CategoriesRepository.CategoryRepositoryImpl((app as App).database.categoryDao())
 

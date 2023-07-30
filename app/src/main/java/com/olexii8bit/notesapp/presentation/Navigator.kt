@@ -12,13 +12,14 @@ fun Fragment.navigator(): Navigator {
 interface Navigator {
 
     fun showEditNoteFragment(note: Note?)
-    fun showCategoryEditDialog(
-        category: Category?,
+
+    fun showNewCategoryDialog(
         lifecycleOwner: LifecycleOwner,
         onNewCategory: (Category) -> Unit,
     )
+
     fun showCategoryEditDialog(
-        category: Category?,
+        category: Category,
         lifecycleOwner: LifecycleOwner,
         onUpdateCategory: (Category) -> Unit,
         onDeleteCategory: (Category) -> Unit,

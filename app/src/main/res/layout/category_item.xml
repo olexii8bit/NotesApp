@@ -22,6 +22,6 @@
         android:paddingEnd="@dimen/mediumPadding"
         tools:text="@android:string/paste"
 
-        android:textSize="24sp" />
+        android:textSize="@dimen/bigTextSize" />
 
 </androidx.cardview.widget.CardView>
