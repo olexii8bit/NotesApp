@@ -36,7 +36,10 @@ class CategoriesFragment : Fragment() {
         val onUpdateCategory: (Category) -> Unit = { model.updateCategory(it) }
         val onDeleteCategory: (Category) -> Unit = { model.deleteCategory(it) }
 
-        val adapter = CategoryRecyclerAdapter { category: Category ->
+        val onItemClick: (Category) -> Unit = { category: Category ->
+
+        }
+        val onItemLongClick: (Category) -> Unit = { category: Category ->
             navigator().showCategoryEditDialog(
                 category,
                 viewLifecycleOwner,
@@ -45,18 +48,30 @@ class CategoriesFragment : Fragment() {
             )
         }
 
+        val adapter = CategoryRecyclerAdapter(onItemLongClick, onItemClick)
+        binding.categoriesRecycler.adapter = adapter
+        binding.categoriesRecycler.layoutManager =
+            object : LinearLayoutManager(
+                this.requireContext(),
+                HORIZONTAL,
+                false
+            ) {
+                override fun canScrollHorizontally() = false
+            }
+
+
         binding.addCategoryButton.setOnClickListener {
             navigator().showNewCategoryDialog(viewLifecycleOwner, onNewCategory)
         }
 
-        binding.categoriesRecycler.layoutManager =
-            LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.categoriesRecycler.adapter = adapter
+        binding.showAllCategoriesTextView.setOnClickListener {
 
-        model.categories.observe(viewLifecycleOwner) {
-            adapter.set(it)
+        }
+
+        model.categories.observe(viewLifecycleOwner) { items: List<Category> ->
+            adapter.set(items)
             Log.d("ddd", "Observed categories")
-            it.forEach { element: Category ->
+            items.forEach { element: Category ->
                 Log.d("ddd", element.toString())
             }
         }

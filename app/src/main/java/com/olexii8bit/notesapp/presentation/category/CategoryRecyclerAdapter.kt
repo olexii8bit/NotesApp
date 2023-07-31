@@ -9,6 +9,7 @@ import com.olexii8bit.notesapp.databinding.CategoryItemBinding
 
 class CategoryRecyclerAdapter(
     private val onItemLongClickListener: (Category) -> Unit = { },
+    private val onItemClickListener: (Category) -> Unit = { }
 ) : Adapter<CategoryRecyclerAdapter.ViewHolder>() {
 
     private val items: MutableList<Category> = mutableListOf()
@@ -23,12 +24,8 @@ class CategoryRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryRecyclerAdapter.ViewHolder, position: Int) {
-        if (items.isNotEmpty()) {
-            holder.bind(items[position])
-        }
+        holder.bind(items[position])
     }
-
-    override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(private val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -37,9 +34,14 @@ class CategoryRecyclerAdapter(
                 onItemLongClickListener(item)
                 true
             }
+            binding.root.setOnClickListener {
+                onItemClickListener(item)
+            }
             binding.nameTextView.text = item.name
         }
     }
+
+    override fun getItemCount(): Int = items.size
 
     fun set(elements: List<Category>) {
         val currentSize = this.items.size

@@ -16,12 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/smallMargin"
-
         android:padding="@dimen/smallPadding"
         android:paddingStart="@dimen/mediumPadding"
         android:paddingEnd="@dimen/mediumPadding"
         tools:text="@android:string/paste"
-
         android:textSize="@dimen/bigTextSize" />
 
 </androidx.cardview.widget.CardView>
