@@ -7,11 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.repository.model.Note
 import com.olexii8bit.notesapp.databinding.FragmentNotesBinding
+import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
 import com.olexii8bit.notesapp.presentation.editNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.navigator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotesFragment : Fragment() {
 
@@ -33,13 +39,26 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val onNoteClickListener = { note: Note ->
-            //model.getNoteWithCategory(note)
-            navigator().showEditNoteFragment(note)
+        val onNoteClickListener: (Note) -> Unit = { note: Note ->
+            lifecycleScope.launch(Dispatchers.Main) {
+                val noteDetails = withContext(Dispatchers.IO) {
+                    model.getNoteWithCategoryAsync(note).await()
+                }
+                val categories = withContext(Dispatchers.IO) {
+                    model.getAllCategoriesAsync().await()
+                }
+                navigator().showEditNoteFragment(noteDetails, categories)
+            }
         }
-//        model.noteDetails.observe(viewLifecycleOwner) {
-//            navigator().showEditNoteFragment(it)
-//        }
+
+        binding.addNoteButton.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.Main) {
+                val categories = withContext(Dispatchers.IO) {
+                    model.getAllCategoriesAsync().await()
+                }
+                navigator().showEditNoteFragment(null, categories)
+            }
+        }
 
         val adapter = NoteRecyclerAdapter(onNoteClickListener)
         binding.notesRecycler.adapter = adapter
@@ -51,10 +70,30 @@ class NotesFragment : Fragment() {
 
         model.notes.observe(viewLifecycleOwner) {
             adapter.set(it)
-            Log.d("ddd", "Observed notes")
+            Log.d("NOTE_COMMUNICATION", "Observed notes")
             it.forEach {
-                Log.d("ddd", it.toString())
+                Log.d("NOTE_COMMUNICATION", it.toString())
             }
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            CategoriesFragment.FIND_ALL_RESULT_KEY,
+            viewLifecycleOwner
+        ) { _: String, _: Bundle ->
+            model.loadNotes()
+            Log.d("NOTE_COMMUNICATION", "FIND_ALL")
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            CategoriesFragment.FIND_ALL_BY_CATEGORY_RESULT_KEY,
+            viewLifecycleOwner
+        )
+        { _: String, bundle: Bundle ->
+            @Suppress("DEPRECATION")
+            val category: Category =
+                (bundle.getParcelable(CategoriesFragment.CATEGORY_ARG) as? Category)!!
+            model.getAllNotesByCategory(category)
+            Log.d("NOTE_COMMUNICATION", "FIND_ALL_BY_CATEGORY - $category")
         }
 
         parentFragmentManager.setFragmentResultListener(
@@ -63,8 +102,10 @@ class NotesFragment : Fragment() {
         )
         { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
-            val newNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
-            model.addNote(newNote)
+            val newData: Note =
+                (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
+            Log.d("NOTE_COMMUNICATION", "NEW_NOTE - $newData")
+            model.addNote(newData)
         }
 
         parentFragmentManager.setFragmentResultListener(
@@ -73,8 +114,10 @@ class NotesFragment : Fragment() {
         )
         { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
-            val updatedNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
-            model.updateNote(updatedNote)
+            val updatedData: Note =
+                (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
+            Log.d("NOTE_COMMUNICATION", "UPDATE_NOTE - $updatedData")
+            model.updateNote(updatedData)
         }
 
         parentFragmentManager.setFragmentResultListener(
@@ -84,12 +127,10 @@ class NotesFragment : Fragment() {
         { _: String, bundle: Bundle ->
             @Suppress("DEPRECATION")
             val deleteNote: Note = (bundle.getParcelable(EditNoteFragment.NOTE_ARG) as? Note)!!
+            Log.d("NOTE_COMMUNICATION", "DELETE_NOTE - $deleteNote")
             model.deleteNote(deleteNote)
         }
 
-        binding.addNoteButton.setOnClickListener {
-            navigator().showEditNoteFragment(null)
-        }
     }
 
 }

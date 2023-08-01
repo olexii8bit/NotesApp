@@ -10,8 +10,8 @@ interface CategoriesRepository {
     fun getAllCategories(): List<Category>
 
     class CategoryRepositoryImpl(
-        private val categoryDao: CategoryDao
-    ): CategoriesRepository {
+        private val categoryDao: CategoryDao,
+    ) : CategoriesRepository {
 
         override fun addCategory(category: Category) = categoryDao.insert(category.toEntity())
 
@@ -19,7 +19,7 @@ interface CategoriesRepository {
 
         override fun deleteCategory(category: Category) = categoryDao.delete(category.toEntity())
 
-        override fun getAllCategories(): List<Category>  =
+        override fun getAllCategories(): List<Category> =
             mutableListOf<Category>().also { result: MutableList<Category> ->
                 categoryDao.getAll().forEach {
                     result.add(it.toModel())

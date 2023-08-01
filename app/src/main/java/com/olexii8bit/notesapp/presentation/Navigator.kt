@@ -3,7 +3,7 @@ package com.olexii8bit.notesapp.presentation
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.data.repository.model.Category
-import com.olexii8bit.notesapp.data.repository.model.Note
+import com.olexii8bit.notesapp.data.repository.model.NoteDetails
 
 fun Fragment.navigator(): Navigator {
     return requireActivity() as Navigator
@@ -11,7 +11,7 @@ fun Fragment.navigator(): Navigator {
 
 interface Navigator {
 
-    fun showEditNoteFragment(note: Note?)
+    fun showEditNoteFragment(note: NoteDetails?, allCategories: List<Category>)
 
     fun showNewCategoryDialog(
         lifecycleOwner: LifecycleOwner,

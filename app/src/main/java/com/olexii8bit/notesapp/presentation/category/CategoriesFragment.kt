@@ -1,11 +1,12 @@
 package com.olexii8bit.notesapp.presentation.category
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.olexii8bit.notesapp.data.repository.model.Category
@@ -18,6 +19,9 @@ class CategoriesFragment : Fragment() {
     private lateinit var binding: FragmentCategoriesBinding
 
     companion object {
+        const val FIND_ALL_BY_CATEGORY_RESULT_KEY = "FIND_ALL_BY_CATEGORY_KEY"
+        const val FIND_ALL_RESULT_KEY = "FIND_ALL_KEY"
+        const val CATEGORY_ARG = "ARG_NOTE"
         fun newInstance() = CategoriesFragment()
     }
 
@@ -37,7 +41,7 @@ class CategoriesFragment : Fragment() {
         val onDeleteCategory: (Category) -> Unit = { model.deleteCategory(it) }
 
         val onItemClick: (Category) -> Unit = { category: Category ->
-
+            setFragmentResult(FIND_ALL_BY_CATEGORY_RESULT_KEY , bundleOf(CATEGORY_ARG to category))
         }
         val onItemLongClick: (Category) -> Unit = { category: Category ->
             navigator().showCategoryEditDialog(
@@ -64,16 +68,12 @@ class CategoriesFragment : Fragment() {
             navigator().showNewCategoryDialog(viewLifecycleOwner, onNewCategory)
         }
 
-        binding.showAllCategoriesTextView.setOnClickListener {
-
+        binding.findAllNotesTextView.setOnClickListener {
+            setFragmentResult(FIND_ALL_RESULT_KEY, bundleOf())
         }
 
         model.categories.observe(viewLifecycleOwner) { items: List<Category> ->
             adapter.set(items)
-            Log.d("ddd", "Observed categories")
-            items.forEach { element: Category ->
-                Log.d("ddd", element.toString())
-            }
         }
     }
 

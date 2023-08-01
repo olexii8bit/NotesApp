@@ -214,6 +214,7 @@ internal class AppDatabaseTest {
         val category1 = CategoryEntity("Work")
         val category2 = CategoryEntity("Films")
         val category3 = CategoryEntity("TODO")
+        assertTrue(categoryDao.getAll().isEmpty())
         categoryDao.insert(category1)
         categoryDao.insert(category2)
         categoryDao.insert(category3)

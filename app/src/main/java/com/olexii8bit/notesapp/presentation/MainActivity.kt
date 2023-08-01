@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.data.repository.model.Category
-import com.olexii8bit.notesapp.data.repository.model.Note
+import com.olexii8bit.notesapp.data.repository.model.NoteDetails
 import com.olexii8bit.notesapp.databinding.ActivityMainBinding
 import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
 import com.olexii8bit.notesapp.presentation.editCategoryDialog.EditCategoryDialogFragment
@@ -46,12 +46,16 @@ class MainActivity : AppCompatActivity(), Navigator {
         })
     }
 
-    override fun showEditNoteFragment(note: Note?) {
+    override fun showEditNoteFragment(note: NoteDetails?, allCategories: List<Category>) {
         binding.categoriesFragmentContainer.visibility = GONE
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
-            .replace(binding.notesFragmentContainer.id, EditNoteFragment.newInstance(note), "1333")
+            .replace(
+                binding.notesFragmentContainer.id,
+                EditNoteFragment.newInstance(note, allCategories),
+                "1333"
+            )
             .commit()
     }
 
