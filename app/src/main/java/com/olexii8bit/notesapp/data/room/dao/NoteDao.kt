@@ -1,5 +1,6 @@
 package com.olexii8bit.notesapp.data.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,11 +21,11 @@ interface NoteDao {
     fun delete(note: NoteEntity)
 
     @Query("SELECT * FROM notes")
-    fun getAll(): List<NoteEntity>
+    fun getAll(): LiveData<List<NoteEntity>>
 
     @Query("SELECT * FROM notes " +
             "WHERE noteCategoryId LIKE :categoryId")
-    fun getNotesByCategory(categoryId: Long): List<NoteEntity>
+    fun getNotesByCategory(categoryId: Long): LiveData<List<NoteEntity>>
 
     @Query("SELECT categories.*, notes.* " +
             "FROM notes " +

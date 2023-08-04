@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.olexii8bit.notesapp.data.repository.model.Category
@@ -24,9 +25,7 @@ class NotesFragment : Fragment() {
     private val model: NotesViewModel by viewModels()
     private lateinit var binding: FragmentNotesBinding
 
-    companion object {
-        fun newInstance() = NotesFragment()
-    }
+    companion object { fun newInstance() = NotesFragment() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +67,7 @@ class NotesFragment : Fragment() {
             }
         binding.notesRecycler.itemAnimator = null
 
-        model.notes.observe(viewLifecycleOwner) {
+        val notesObserver = Observer<List<Note>> {
             adapter.set(it)
             Log.d("NOTE_COMMUNICATION", "Observed notes")
             it.forEach {
@@ -76,11 +75,16 @@ class NotesFragment : Fragment() {
             }
         }
 
+        if (!model.hasSelectedCategory) model.notes.observe(viewLifecycleOwner, notesObserver)
+        else model.notesByCategory.observe(viewLifecycleOwner, notesObserver)
+
         parentFragmentManager.setFragmentResultListener(
             CategoriesFragment.FIND_ALL_RESULT_KEY,
             viewLifecycleOwner
         ) { _: String, _: Bundle ->
-            model.loadNotes()
+            model.setCategory(null)
+            model.notesByCategory.removeObserver(notesObserver)
+            model.notes.observe(viewLifecycleOwner, notesObserver)
             Log.d("NOTE_COMMUNICATION", "FIND_ALL")
         }
 
@@ -92,7 +96,9 @@ class NotesFragment : Fragment() {
             @Suppress("DEPRECATION")
             val category: Category =
                 (bundle.getParcelable(CategoriesFragment.CATEGORY_ARG) as? Category)!!
-            model.getAllNotesByCategory(category)
+            model.setCategory(category)
+            model.notes.removeObserver(notesObserver)
+            model.notesByCategory.observe(viewLifecycleOwner, notesObserver)
             Log.d("NOTE_COMMUNICATION", "FIND_ALL_BY_CATEGORY - $category")
         }
 
