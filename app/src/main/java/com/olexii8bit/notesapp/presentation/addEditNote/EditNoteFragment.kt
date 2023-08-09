@@ -1,4 +1,4 @@
-package com.olexii8bit.notesapp.presentation.editNote
+package com.olexii8bit.notesapp.presentation.addEditNote
 
 import android.os.Bundle
 import android.view.LayoutInflater

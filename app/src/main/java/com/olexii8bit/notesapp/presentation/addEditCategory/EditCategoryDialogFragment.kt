@@ -1,4 +1,4 @@
-package com.olexii8bit.notesapp.presentation.editCategoryDialog
+package com.olexii8bit.notesapp.presentation.addEditCategory
 
 import android.app.AlertDialog
 import android.app.Dialog

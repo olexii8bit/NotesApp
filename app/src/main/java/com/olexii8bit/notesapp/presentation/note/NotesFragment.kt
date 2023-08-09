@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.repository.model.Note
 import com.olexii8bit.notesapp.databinding.FragmentNotesBinding
+import com.olexii8bit.notesapp.presentation.addEditNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
-import com.olexii8bit.notesapp.presentation.editNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.navigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

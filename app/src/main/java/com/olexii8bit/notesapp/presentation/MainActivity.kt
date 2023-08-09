@@ -10,9 +10,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.data.repository.model.NoteDetails
 import com.olexii8bit.notesapp.databinding.ActivityMainBinding
+import com.olexii8bit.notesapp.presentation.addEditCategory.EditCategoryDialogFragment
+import com.olexii8bit.notesapp.presentation.addEditNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
-import com.olexii8bit.notesapp.presentation.editCategoryDialog.EditCategoryDialogFragment
-import com.olexii8bit.notesapp.presentation.editNote.EditNoteFragment
 import com.olexii8bit.notesapp.presentation.note.NotesFragment
 
 class MainActivity : AppCompatActivity(), Navigator {
@@ -27,35 +27,35 @@ class MainActivity : AppCompatActivity(), Navigator {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(binding.categoriesFragmentContainer.id, CategoriesFragment.newInstance())
+                .add(binding.extraFragmentContainer.id, CategoriesFragment.newInstance())
                 .commit()
 
             supportFragmentManager
                 .beginTransaction()
-                .add(binding.notesFragmentContainer.id, NotesFragment.newInstance())
+                .add(binding.mainFragmentContainer.id, NotesFragment.newInstance())
                 .commit()
         }
 
         if (supportFragmentManager.backStackEntryCount != 0)
-            binding.categoriesFragmentContainer.visibility = GONE
+            binding.extraFragmentContainer.visibility = GONE
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStackImmediate()
                 if (supportFragmentManager.backStackEntryCount == 0)
-                    binding.categoriesFragmentContainer.visibility = VISIBLE
+                    binding.extraFragmentContainer.visibility = VISIBLE
             }
 
         })
     }
 
     override fun showEditNoteFragment(note: NoteDetails?, allCategories: List<Category>) {
-        binding.categoriesFragmentContainer.visibility = GONE
+        binding.extraFragmentContainer.visibility = GONE
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
             .replace(
-                binding.notesFragmentContainer.id,
+                binding.mainFragmentContainer.id,
                 EditNoteFragment.newInstance(note, allCategories)
             )
             .commit()
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun goMainScreen() {
-        binding.categoriesFragmentContainer.visibility = VISIBLE
+        binding.extraFragmentContainer.visibility = VISIBLE
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
