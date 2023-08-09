@@ -13,17 +13,17 @@ import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.R
 import com.olexii8bit.notesapp.data.repository.model.Category
 
-class EditCategoryDialogFragment : DialogFragment() {
+class AddEditCategoryDialogFragment : DialogFragment() {
 
     companion object {
         const val NEW_CATEGORY_RESULT_KEY = "NEW_CATEGORY_RESULT_KEY"
         const val UPDATE_CATEGORY_RESULT_KEY = "UPDATE_CATEGORY_RESULT_KEY"
         const val DELETE_CATEGORY_RESULT_KEY = "DELETE_CATEGORY_RESULT_KEY"
         private const val CATEGORY_ARG = "ARG_NOTE"
-        private val TAG = EditCategoryDialogFragment::class.java.simpleName
+        private val TAG = AddEditCategoryDialogFragment::class.java.simpleName
 
         fun show(manager: FragmentManager, category: Category?) {
-            val fragment = EditCategoryDialogFragment()
+            val fragment = AddEditCategoryDialogFragment()
             fragment.arguments = bundleOf(CATEGORY_ARG to category)
             fragment.show(manager, TAG)
         }

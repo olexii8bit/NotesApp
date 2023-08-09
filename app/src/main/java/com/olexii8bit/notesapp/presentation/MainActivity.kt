@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.olexii8bit.notesapp.data.repository.model.Category
-import com.olexii8bit.notesapp.data.repository.model.NoteDetails
+import com.olexii8bit.notesapp.data.repository.model.Note
 import com.olexii8bit.notesapp.databinding.ActivityMainBinding
-import com.olexii8bit.notesapp.presentation.addEditCategory.EditCategoryDialogFragment
-import com.olexii8bit.notesapp.presentation.addEditNote.EditNoteFragment
+import com.olexii8bit.notesapp.presentation.addEditCategory.AddEditCategoryDialogFragment
+import com.olexii8bit.notesapp.presentation.addEditNote.AddEditNoteFragment
 import com.olexii8bit.notesapp.presentation.category.CategoriesFragment
 import com.olexii8bit.notesapp.presentation.note.NotesFragment
 
@@ -49,14 +49,14 @@ class MainActivity : AppCompatActivity(), Navigator {
         })
     }
 
-    override fun showEditNoteFragment(note: NoteDetails?, allCategories: List<Category>) {
+    override fun showEditNoteFragment(note: Note?) {
         binding.extraFragmentContainer.visibility = GONE
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
             .replace(
                 binding.mainFragmentContainer.id,
-                EditNoteFragment.newInstance(note, allCategories)
+                AddEditNoteFragment.newInstance(note)
             )
             .commit()
     }
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         lifecycleOwner: LifecycleOwner,
         onNewCategory: (Category) -> Unit,
     ) {
-        EditCategoryDialogFragment.apply {
+        AddEditCategoryDialogFragment.apply {
             this.show(supportFragmentManager, null)
 
             this.listenResult(NEW_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         onUpdateCategory: (Category) -> Unit,
         onDeleteCategory: (Category) -> Unit,
     ) {
-        EditCategoryDialogFragment.apply {
+        AddEditCategoryDialogFragment.apply {
             this.show(supportFragmentManager, category)
 
             this.listenResult(UPDATE_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
