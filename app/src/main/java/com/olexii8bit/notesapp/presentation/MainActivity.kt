@@ -77,18 +77,13 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun showCategoryEditDialog(
         category: Category,
         lifecycleOwner: LifecycleOwner,
-        onUpdateCategory: (Category) -> Unit,
-        onDeleteCategory: (Category) -> Unit,
+        onUpdateCategory: (Category) -> Unit
     ) {
         AddEditCategoryDialogFragment.apply {
             this.show(supportFragmentManager, category)
 
             this.listenResult(UPDATE_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
                 onUpdateCategory.invoke(it)
-            }
-
-            this.listenResult(DELETE_CATEGORY_RESULT_KEY, supportFragmentManager, lifecycleOwner) {
-                onDeleteCategory.invoke(it)
             }
         }
     }

@@ -18,7 +18,6 @@ class AddEditCategoryDialogFragment : DialogFragment() {
     companion object {
         const val NEW_CATEGORY_RESULT_KEY = "NEW_CATEGORY_RESULT_KEY"
         const val UPDATE_CATEGORY_RESULT_KEY = "UPDATE_CATEGORY_RESULT_KEY"
-        const val DELETE_CATEGORY_RESULT_KEY = "DELETE_CATEGORY_RESULT_KEY"
         private const val CATEGORY_ARG = "ARG_NOTE"
         private val TAG = AddEditCategoryDialogFragment::class.java.simpleName
 
@@ -67,13 +66,6 @@ class AddEditCategoryDialogFragment : DialogFragment() {
 
             AlertDialog.Builder(this.requireContext())
                 .setTitle(R.string.categoryDialogTitle)
-                .setNegativeButton(R.string.categoryDialogDelete) { _: DialogInterface, _: Int ->
-                    val deleteCategory = currentCategory.copy(name = editText.text.toString())
-                    setFragmentResult(
-                        DELETE_CATEGORY_RESULT_KEY,
-                        bundleOf(CATEGORY_ARG to deleteCategory)
-                    )
-                }
                 .setPositiveButton(R.string.categoryDialogConfirm) { _: DialogInterface, _: Int ->
                     val updateCategory = currentCategory.copy(name = editText.text.toString())
                     setFragmentResult(

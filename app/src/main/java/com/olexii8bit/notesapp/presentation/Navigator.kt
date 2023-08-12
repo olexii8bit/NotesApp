@@ -21,8 +21,7 @@ interface Navigator {
     fun showCategoryEditDialog(
         category: Category,
         lifecycleOwner: LifecycleOwner,
-        onUpdateCategory: (Category) -> Unit,
-        onDeleteCategory: (Category) -> Unit,
+        onUpdateCategory: (Category) -> Unit
     )
 
     fun goMainScreen()

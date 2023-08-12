@@ -1,6 +1,7 @@
 package com.olexii8bit.notesapp.presentation.category
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -8,8 +9,8 @@ import com.olexii8bit.notesapp.data.repository.model.Category
 import com.olexii8bit.notesapp.databinding.CategoryItemBinding
 
 class CategoryRecyclerAdapter(
-    private val onItemLongClickListener: (Category) -> Unit = { },
-    private val onItemClickListener: (Category) -> Unit = { }
+    private val onItemLongClickListener: (Category, View) -> Unit,
+    private val onItemClickListener: (Category) -> Unit
 ) : Adapter<CategoryRecyclerAdapter.ViewHolder>() {
 
     private val items: MutableList<Category> = mutableListOf()
@@ -31,7 +32,7 @@ class CategoryRecyclerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Category) {
             binding.root.setOnLongClickListener {
-                onItemLongClickListener(item)
+                onItemLongClickListener(item, binding.root)
                 true
             }
             binding.root.setOnClickListener {
