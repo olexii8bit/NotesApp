@@ -18,11 +18,7 @@ class CategoriesViewModel(app: Application) : AndroidViewModel(app) {
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> get() = _categories
 
-    init {
-
-    }
-
-    fun loadCategories() = viewModelScope.launch(Dispatchers.IO) {
+    private fun loadCategories() = viewModelScope.launch(Dispatchers.IO) {
         _categories.postValue(categoriesRepository.getAllCategories())
     }
 
